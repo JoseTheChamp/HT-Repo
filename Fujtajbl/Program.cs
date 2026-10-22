@@ -1,82 +1,118 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+using Fujtajbl.Operations;
 
 namespace Fujtajbl
 {
 	class Program
 	{
+		static readonly Operation[] Operations =
+		{
+			new Addition(),
+			new Subtraction(),
+			new Multiplication(),
+			new Division(),
+		};
+
+		static readonly Regex WholeNumberPattern = new Regex("^[+-]?[0-9]+$");
+		static readonly Regex DecimalNumberPattern = new Regex("^[+-]?[0-9]*[.,][0-9]+$");
+
 		static void Main(string[] args)
 		{
-Start:
-			Console.WriteLine("Zadejte cislo A");
-			var a = Int32.Parse(Console.ReadLine());
-
-			Console.WriteLine("Zadejte cislo B");
-			var b = Int32.Parse(Console.ReadLine());
-
-Select:
-			Console.Write(Environment.NewLine);
-			Console.Write("Vyberte operaci" + Environment.NewLine);
-			Console.Write("1: a + b" + Environment.NewLine);
-			Console.Write("2: a - b" + Environment.NewLine);
-			Console.Write("3: a * b" + Environment.NewLine);
-			Console.Write("4: a / b" + Environment.NewLine);
-
-			var operace = Int32.Parse(Console.ReadLine());
-			int found = 0;
-			string vysledek = null;
-
-			if (operace == 1)
+			do
 			{
-				vysledek = "Vysledek je = " + (a + b);
-				found = 1;
+				var a = ReadNumber("Zadejte cislo A");
+				var b = ReadNumber("Zadejte cislo B");
+
+				CalculateAndPrint(a, b);
 			}
-			else
+			while (WantsAnotherCalculation());
+		}
+
+		static void CalculateAndPrint(int a, int b)
+		{
+			while (true)
 			{
-				if (operace == 2)
+				var operation = ReadOperation();
+
+				var error = operation.GetValidationError(a, b);
+				if (error == null)
 				{
-					vysledek = "Vysledek je = " + (a - b);
-					found = 2;
+					Console.WriteLine($"{a} {operation.Symbol} {b} = {operation.FormatResult(a, b)}");
+					return;
 				}
-				else
+
+				Console.WriteLine($"{error} Vyberte jinou operaci.");
+			}
+		}
+
+		static int ReadNumber(string prompt)
+		{
+			Console.WriteLine(prompt);
+			return ReadInt(int.MinValue, int.MaxValue);
+		}
+
+		static Operation ReadOperation()
+		{
+			Console.WriteLine();
+			Console.WriteLine("Vyberte operaci");
+			for (var i = 0; i < Operations.Length; i++)
+				Console.WriteLine($"{i + 1}: a {Operations[i].Symbol} b");
+
+			var choice = ReadInt(1, Operations.Length);
+			return Operations[choice - 1];
+		}
+
+		static int ReadInt(int min, int max)
+		{
+			while (true)
+			{
+				var input = ReadInput();
+
+				if (int.TryParse(input, out var number) && number >= min && number <= max)
+					return number;
+
+				Console.WriteLine(DescribeInvalidNumber(input, min, max));
+			}
+		}
+
+		static string DescribeInvalidNumber(string input, int min, int max)
+		{
+			if (input.Length == 0)
+				return "Nezadali jste zadnou hodnotu. Zadejte cele cislo:";
+
+			if (WholeNumberPattern.IsMatch(input))
+				return $"Cislo {input} je mimo povoleny rozsah {min} az {max}. Zadejte cislo v tomto rozsahu:";
+
+			if (DecimalNumberPattern.IsMatch(input))
+				return "Desetinna cisla nejsou podporovana. Zadejte cele cislo:";
+
+			return $"\"{input}\" neni cele cislo. Zadejte cele cislo:";
+		}
+
+		static string ReadInput()
+		{
+			return Console.ReadLine().Trim();
+		}
+
+		static bool WantsAnotherCalculation()
+		{
+			Console.WriteLine("Chcete spustit novy vypocet? (a/n)");
+
+			while (true)
+			{
+				switch (ReadInput().ToLowerInvariant())
 				{
-					if (operace == 3)
-					{
-						vysledek = "Vysledek je = " + (a * b);
-						found = 3;
-					}
-					else
-					{
-						if (operace == 4)
-						{
-							vysledek = "Vysledek je = " + (a / b);
-							found = 4;
-						}
-					}
+					case "a":
+					case "ano":
+						return true;
+					case "n":
+					case "ne":
+						return false;
 				}
-			}
 
-			if (found == 0)
-			{
-				Console.WriteLine("Neznama operace!");
-				goto Select;
+				Console.WriteLine("Odpovezte prosim a (ano) nebo n (ne):");
 			}
-			else
-			{
-				if (found == 1) Console.WriteLine("Operace a + b: " + vysledek);
-				else
-					if (found == 2) Console.WriteLine("Operace a - b: " + vysledek);
-				else
-					if (found == 3) Console.WriteLine("Operace a * b: " + vysledek);
-				else
-					if (found == 4) Console.WriteLine("Operace a / b: " + vysledek);
-			}
-
-			Console.WriteLine("Chcete spustit novy vypocet?");
-			if (Console.ReadLine() == "a") goto Start;
 		}
 	}
 }
