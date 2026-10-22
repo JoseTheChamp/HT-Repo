@@ -1,0 +1,33 @@
+# Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Ll]og/
+
+# NuGet
+packages/
+*.nupkg
+
+# Test results
+[Tt]est[Rr]esult*/
+*.trx
+
+# JetBrains Rider / ReSharper
+.idea/
+_ReSharper*/
+*.DotSettings.user
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store
