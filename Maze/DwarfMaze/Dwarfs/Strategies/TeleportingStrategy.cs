@@ -2,7 +2,6 @@
 using DwarfMaze.Mazes;
 using System;
 using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DwarfMaze.Dwarfs.Strategies
 {
