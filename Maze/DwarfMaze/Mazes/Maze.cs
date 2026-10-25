@@ -1,5 +1,4 @@
 ﻿using DwarfMaze.Geometry;
-using System.Diagnostics.Eventing.Reader;
 
 namespace DwarfMaze.Mazes
 {
@@ -7,7 +6,7 @@ namespace DwarfMaze.Mazes
 	{
 		public Maze(Cell[,] cells, Position start, Position finish)
 		{
-			_cells = cells;
+			_cells = (Cell[,])cells.Clone(); ;
 			Start = start;
 			Finish = finish;
 		}

@@ -46,6 +46,11 @@
     <Compile Include="Geometry\Direction.cs" />
     <Compile Include="Geometry\Directions.cs" />
     <Compile Include="Geometry\Position.cs" />
+    <Compile Include="Mazes\Cell.cs" />
+    <Compile Include="Mazes\Maze.cs" />
+    <Compile Include="Mazes\MazeFormatException.cs" />
+    <Compile Include="Mazes\MazeLoader.cs" />
+    <Compile Include="Mazes\MazeSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -58,7 +63,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Dwarfs\Strategies\" />
-    <Folder Include="Mazes\" />
     <Folder Include="Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
