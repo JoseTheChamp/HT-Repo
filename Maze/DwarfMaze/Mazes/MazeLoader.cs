@@ -1,11 +1,17 @@
 ﻿using DwarfMaze.Geometry;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace DwarfMaze.Mazes
 {
 	static class MazeLoader
 	{
+		public static Maze Load(string path)
+		{
+			return Parse(File.ReadAllLines(path));
+		}
+
 		public static Maze Parse(IReadOnlyList<string> lines)
 		{
 			List<string> rows = lines.Select(line => line.TrimEnd()).ToList();

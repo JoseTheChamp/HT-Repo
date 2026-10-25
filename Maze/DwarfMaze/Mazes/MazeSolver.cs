@@ -16,10 +16,7 @@ namespace DwarfMaze.Mazes
 			while (queue.Count > 0)
 			{
 				Position current = queue.Dequeue();
-				if (current == to)
-				{
-					return BuildPath(camefrom, from, to);
-				}
+				if (current == to) return BuildPath(camefrom, from, to);
 
 				foreach (var direction in Directions.All)
 				{

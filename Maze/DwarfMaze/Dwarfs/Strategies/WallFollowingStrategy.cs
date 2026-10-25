@@ -2,7 +2,6 @@
 using DwarfMaze.Mazes;
 using System.Collections.Generic;
 using System.Linq;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace DwarfMaze.Dwarfs.Strategies
 {
@@ -27,8 +26,7 @@ namespace DwarfMaze.Dwarfs.Strategies
 			foreach (Direction direction in candidates)
 			{
 				Position next = current.Move(direction);
-				if (!_maze.IsWalkable(next))
-					continue;
+				if (!_maze.IsWalkable(next)) continue;
 
 				_facing = direction;
 

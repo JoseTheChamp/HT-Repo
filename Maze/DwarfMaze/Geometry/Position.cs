@@ -20,7 +20,7 @@ namespace DwarfMaze.Geometry
 			{
 				case Direction.Up:
 					return new Position(X, Y - 1);
-				case Direction.Rigth:
+				case Direction.Right:
 					return new Position(X + 1, Y);
 				case Direction.Down:
 					return new Position(X, Y + 1);

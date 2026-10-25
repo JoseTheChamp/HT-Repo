@@ -4,7 +4,7 @@
 	public enum Direction
 	{
 		Up,
-		Rigth,
+		Right,
 		Down,
 		Left
 	}

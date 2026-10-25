@@ -12,7 +12,7 @@ namespace DwarfMaze.Mazes
 
 		public Maze(Cell[,] cells, Position start, Position finish)
 		{
-			_cells = (Cell[,])cells.Clone(); ;
+			_cells = (Cell[,])cells.Clone();
 			Start = start;
 			Finish = finish;
 		}

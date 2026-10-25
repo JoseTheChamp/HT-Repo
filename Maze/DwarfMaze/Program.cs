@@ -2,7 +2,6 @@
 using DwarfMaze.Dwarfs.Strategies;
 using DwarfMaze.Mazes;
 using System;
-using System.IO;
 
 namespace DwarfMaze
 {
@@ -11,8 +10,7 @@ namespace DwarfMaze
 		static void Main(string[] args)
 		{
 			// docasny test - smazat
-			string[] lines = File.ReadAllLines("Maze.dat");
-			Maze maze = MazeLoader.Parse(lines);
+			Maze maze = MazeLoader.Load("Maze.dat");
 			DwarfFactory factory = new DwarfFactory(maze, new Random(42));
 
 			Console.WriteLine("cesta: " + MazeSolver.FindShortestPath(maze, maze.Start, maze.Finish).Count + " (134)");
