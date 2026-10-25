@@ -43,6 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dwarfs\Dwarf.cs" />
+    <Compile Include="Dwarfs\DwarfState.cs" />
+    <Compile Include="Dwarfs\DwarfType.cs" />
+    <Compile Include="Dwarfs\IMovementStrategy.cs" />
+    <Compile Include="Dwarfs\Strategies\DwarfFactory.cs" />
+    <Compile Include="Dwarfs\Strategies\Hand.cs" />
+    <Compile Include="Dwarfs\Strategies\PathFollowingStrategy.cs" />
+    <Compile Include="Dwarfs\Strategies\TeleportingStrategy.cs" />
+    <Compile Include="Dwarfs\Strategies\WallFollowingStrategy.cs" />
     <Compile Include="Geometry\Direction.cs" />
     <Compile Include="Geometry\Directions.cs" />
     <Compile Include="Geometry\Position.cs" />
@@ -62,7 +71,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dwarfs\Strategies\" />
     <Folder Include="Rendering\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

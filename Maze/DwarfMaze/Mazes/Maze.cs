@@ -4,18 +4,18 @@ namespace DwarfMaze.Mazes
 {
 	class Maze
 	{
+		readonly Cell[,] _cells;
+		public int Width => _cells.GetLength(1);
+		public int Height => _cells.GetLength(0);
+		public Position Start { get; }
+		public Position Finish { get; }
+
 		public Maze(Cell[,] cells, Position start, Position finish)
 		{
 			_cells = (Cell[,])cells.Clone(); ;
 			Start = start;
 			Finish = finish;
 		}
-
-		readonly Cell[,] _cells;
-		public int Width => _cells.GetLength(1);
-		public int Height => _cells.GetLength(0);
-		public Position Start { get; }
-		public Position Finish { get; }
 
 		public Cell this[Position position] => _cells[position.Y, position.X];
 
