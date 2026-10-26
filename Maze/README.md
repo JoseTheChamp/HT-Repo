@@ -1,5 +1,3 @@
-# Projekt Trpaslík (Maze)
-
 ## Spuštění
 
 - **Přímo exe:** ve složce `Maze\DwarfMaze\bin\Debug` (vznikne po sestavení projektu) spusťte `DwarfMaze.exe`.
