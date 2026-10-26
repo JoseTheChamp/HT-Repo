@@ -3,7 +3,7 @@ using Fujtajbl.Operations;
 
 namespace Fujtajbl
 {
-	class Program
+	static class Program
 	{
 		static readonly Operation[] Operations =
 		{
@@ -17,8 +17,8 @@ namespace Fujtajbl
 		{
 			do
 			{
-				var a = ReadNumber("Zadejte cislo A");
-				var b = ReadNumber("Zadejte cislo B");
+				int a = ReadNumber("Zadejte cislo A");
+				int b = ReadNumber("Zadejte cislo B");
 
 				CalculateAndPrint(a, b);
 			}
@@ -29,9 +29,9 @@ namespace Fujtajbl
 		{
 			while (true)
 			{
-				var operation = ReadOperation();
+				Operation operation = ReadOperation();
 
-				var error = operation.GetValidationError(a, b);
+				string error = operation.GetValidationError(a, b);
 				if (error == null)
 				{
 					Console.WriteLine($"{a} {operation.Symbol} {b} = {operation.FormatResult(a, b)}");
@@ -52,10 +52,10 @@ namespace Fujtajbl
 		{
 			Console.WriteLine();
 			Console.WriteLine("Vyberte operaci");
-			for (var i = 0; i < Operations.Length; i++)
+			for (int i = 0; i < Operations.Length; i++)
 				Console.WriteLine($"{i + 1}: a {Operations[i].Symbol} b");
 
-			var choice = ConsoleInput.ReadInt(1, Operations.Length);
+			int choice = ConsoleInput.ReadInt(1, Operations.Length);
 			return Operations[choice - 1];
 		}
 
