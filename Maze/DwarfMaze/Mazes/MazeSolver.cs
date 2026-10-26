@@ -18,7 +18,7 @@ namespace DwarfMaze.Mazes
 				Position current = queue.Dequeue();
 				if (current == to) return BuildPath(camefrom, from, to);
 
-				foreach (var direction in Directions.All)
+				foreach (Direction direction in Directions.All)
 				{
 					Position next = current.Move(direction);
 					if (!maze.IsWalkable(next) || camefrom[next.Y, next.X] != null) continue;

@@ -1,56 +1,68 @@
 ﻿using DwarfMaze.Dwarfs;
 using DwarfMaze.Dwarfs.Strategies;
 using DwarfMaze.Mazes;
+using DwarfMaze.Rendering;
 using System;
+using System.IO;
 
 namespace DwarfMaze
 {
 	internal static class Program
 	{
-		static void Main(string[] args)
+		const string DefaultMazeFileName = "Maze.dat";
+
+		static readonly DwarfType[] DwarfsOrder =
 		{
-			// docasny test - smazat
-			Maze maze = MazeLoader.Load("Maze.dat");
-			DwarfFactory factory = new DwarfFactory(maze, new Random(42));
+			DwarfType.LeftHand,
+			DwarfType.RightHand,
+			DwarfType.Teleporter,
+			DwarfType.PathFollower,
+		};
 
-			Console.WriteLine("cesta: " + MazeSolver.FindShortestPath(maze, maze.Start, maze.Finish).Count + " (134)");
+		static int Main(string[] args)
+		{
+			string mazePath = args.Length > 0 ? args[0] : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DefaultMazeFileName);
 
-			Test(maze, factory.Create(DwarfType.LeftHand), "542");
-			Test(maze, factory.Create(DwarfType.RightHand), "1058");
-			Test(maze, factory.Create(DwarfType.PathFollower), "134");
-			Test(maze, factory.Create(DwarfType.Teleporter), "max 90");
-
-			Maze ring = MazeLoader.Parse(new string[]
+			Maze maze;
+			try
 			{
-				"#######",
-				"#     #",
-				"# ### #",
-				"# # # #",
-				"# ### #",
-				"#  S  F",
-				"#######",
-			});
-			DwarfFactory ringFactory = new DwarfFactory(ring, new Random(42));
+				maze = MazeLoader.Load(mazePath);
+			}
+			catch (Exception e) when (e is IOException || e is UnauthorizedAccessException || e is MazeFormatException)
+			{
+				Console.WriteLine($"Bludiště '{mazePath}' nelze načíst: {e.Message}");
+				WaitForKey();
+				return 1;
+			}
 
-			Console.WriteLine("kruh L: " + Walk(ringFactory.Create(DwarfType.LeftHand)).State + " (Lost)");
-			Console.WriteLine("kruh P: " + Walk(ringFactory.Create(DwarfType.RightHand)).State + " (Finished)");
+			ConsoleRenderer renderer = new ConsoleRenderer(maze, DwarfsOrder.Length);
+			DwarfRun run = new DwarfRun(new DwarfFactory(maze, new Random()), DwarfsOrder, renderer);
 
-			Console.ReadKey();
+			try
+			{
+				renderer.Prepare();
+				run.Run();
+			}
+			finally
+			{
+				renderer.Restore();
+			}
+
+			WaitForKey();
+			return 0;
 		}
 
-		static void Test(Maze maze, Dwarf dwarf, string expected)
+		static void WaitForKey()
 		{
-			bool atStart = dwarf.Position == maze.Start;
-			Walk(dwarf);
-			Console.WriteLine($"{dwarf.Name}: start {atStart}, {dwarf.State}, kroku {dwarf.Steps} ({expected})");
-		}
+			if (Console.IsInputRedirected) return;
 
-		static Dwarf Walk(Dwarf dwarf)
-		{
-			for (int i = 0; i < 100000 && dwarf.State == DwarfState.Walking; i++)
-				dwarf.Step();
+			while (Console.KeyAvailable)
+			{
+				Console.ReadKey(intercept: true);
+			}
 
-			return dwarf;
+			Console.Write("Stiskněte libovolnou klávesu...");
+			Console.ReadKey(intercept: true);
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using DwarfMaze.Geometry;
+﻿using DwarfMaze.Dwarfs.Strategies;
+using DwarfMaze.Geometry;
 using DwarfMaze.Mazes;
 using System;
 
@@ -11,7 +12,7 @@ namespace DwarfMaze.Dwarfs
 		public string Name { get; }
 		public char Symbol { get; }
 		public ConsoleColor Color { get; }
-		public int Steps { get; set; }
+		public int Steps { get; private set; }
 		public Position Position { get; private set; }
 		public DwarfState State { get; private set; } = DwarfState.Walking;
 
@@ -29,7 +30,7 @@ namespace DwarfMaze.Dwarfs
 		{
 			if (State != DwarfState.Walking) return;
 
-			var next = _strategy.GetNextPosition(Position);
+			Position? next = _strategy.GetNextPosition(Position);
 			if (next == null)
 			{
 				State = DwarfState.Lost;

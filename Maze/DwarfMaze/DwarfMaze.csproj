@@ -43,11 +43,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DwarfRun.cs" />
     <Compile Include="Dwarfs\Dwarf.cs" />
     <Compile Include="Dwarfs\DwarfState.cs" />
     <Compile Include="Dwarfs\DwarfType.cs" />
-    <Compile Include="Dwarfs\IMovementStrategy.cs" />
-    <Compile Include="Dwarfs\Strategies\DwarfFactory.cs" />
+    <Compile Include="Dwarfs\Strategies\IMovementStrategy.cs" />
+    <Compile Include="Dwarfs\DwarfFactory.cs" />
     <Compile Include="Dwarfs\Strategies\Hand.cs" />
     <Compile Include="Dwarfs\Strategies\PathFollowingStrategy.cs" />
     <Compile Include="Dwarfs\Strategies\TeleportingStrategy.cs" />
@@ -62,6 +63,8 @@
     <Compile Include="Mazes\MazeSolver.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rendering\ConsoleRenderer.cs" />
+    <Compile Include="Rendering\VirtualTerminal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Maze.dat">
@@ -70,8 +73,6 @@
     </None>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Rendering\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

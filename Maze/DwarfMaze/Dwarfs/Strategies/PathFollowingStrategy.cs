@@ -11,7 +11,7 @@ namespace DwarfMaze.Dwarfs.Strategies
 
 		public PathFollowingStrategy(Maze maze)
 		{
-			var path = MazeSolver.FindShortestPath(maze, maze.Start, maze.Finish);
+			IReadOnlyList<Position> path = MazeSolver.FindShortestPath(maze, maze.Start, maze.Finish);
 			_remainingPath = new Queue<Position>(path ?? Enumerable.Empty<Position>());
 		}
 

@@ -1,6 +1,7 @@
 ﻿using DwarfMaze.Geometry;
 using DwarfMaze.Mazes;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace DwarfMaze.Dwarfs.Strategies
@@ -31,7 +32,7 @@ namespace DwarfMaze.Dwarfs.Strategies
 
 		Position RandomStep(Position current)
 		{
-			var options = Directions.All
+			List<Position> options = Directions.All
 				.Select(direction => current.Move(direction))
 				.Where(position => _maze.IsWalkable(position) && position != _previous)
 				.ToList();

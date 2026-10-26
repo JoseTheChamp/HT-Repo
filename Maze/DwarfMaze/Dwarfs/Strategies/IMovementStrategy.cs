@@ -1,6 +1,6 @@
 ﻿using DwarfMaze.Geometry;
 
-namespace DwarfMaze.Dwarfs
+namespace DwarfMaze.Dwarfs.Strategies
 {
 	interface IMovementStrategy
 	{

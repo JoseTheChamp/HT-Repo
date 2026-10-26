@@ -15,7 +15,8 @@ namespace DwarfMaze.Mazes
 		public static Maze Parse(IReadOnlyList<string> lines)
 		{
 			List<string> rows = lines.Select(line => line.TrimEnd()).ToList();
-			while (rows.Count > 0 && rows[rows.Count - 1].Length == 0) { 
+			while (rows.Count > 0 && rows[rows.Count - 1].Length == 0)
+			{
 				rows.RemoveAt(rows.Count - 1);
 			}
 
@@ -27,33 +28,23 @@ namespace DwarfMaze.Mazes
 			Position? start = null;
 			Position? finish = null;
 
-			for (int y = 0; y < rows.Count; y++) {
-				for (int x = 0; x < width; x++) {
+			for (int y = 0; y < rows.Count; y++)
+			{
+				for (int x = 0; x < width; x++)
+				{
 					Position position = new Position(x, y);
 					Cell cell = ParseCell(x < rows[y].Length ? rows[y][x] : ' ', position);
 					cells[y, x] = cell;
 
 					if (cell == Cell.Start)
 					{
-						if (start is null)
-						{
-							start = position;
-						}
-						else
-						{
-							throw new MazeFormatException($"Bludiště musí mít pouze jeden start. (S)");
-						}
+						if (start != null) throw new MazeFormatException("Bludiště musí mít pouze jeden start (S).");
+						start = position;
 					}
-					else if( cell == Cell.Finish)
+					else if (cell == Cell.Finish)
 					{
-						if (finish is null)
-						{
-							finish = position;
-						}
-						else
-						{
-							throw new MazeFormatException($"Bludiště musí mít pouze jeden cíl. (F)");
-						}
+						if (finish != null) throw new MazeFormatException("Bludiště musí mít pouze jeden cíl (F).");
+						finish = position;
 					}
 				}
 			}
